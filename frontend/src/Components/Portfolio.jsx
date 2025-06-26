@@ -1414,18 +1414,27 @@ function TypingEffect() {
     return () => clearTimeout(timeout);
   }, [displayed, typing, lineIdx]);
 
+
+  
   // Render 3 blinking cursors
-  return (
-    <div className="text-2xl md:text-3xl font-mono mb-4 min-h-[2.5rem] flex justify-center items-center gap-2">
-      <span className="text-[#AAC638]">
-        {displayed}
-      </span>
-      <span className="flex gap-1">
-        <span className="text-[#AAC638] animate-pulse">|</span>
-        <span className="text-[#AAC638] animate-pulse" style={{ animationDelay: '0.2s' }}>|</span>
-        <span className="text-[#AAC638] animate-pulse" style={{ animationDelay: '0.4s' }}>|</span>
-      </span>
-    </div>
+return (
+  <div className="text-2xl md:text-3xl font-mono mb-4 min-h-[2.5rem] flex justify-center items-center gap-2">
+    {/* 3 blinking cursors at the front */}
+    <span className="flex gap-1">
+      <span className="text-[#AAC638] animate-pulse">|</span>
+      <span className="text-[#AAC638] animate-pulse" style={{ animationDelay: '0.2s' }}>|</span>
+      <span className="text-[#AAC638] animate-pulse" style={{ animationDelay: '0.4s' }}>|</span>
+    </span>
+    <span className="text-[#AAC638]">
+      {displayed}
+    </span>
+    {/* 3 blinking cursors at the end */}
+    <span className="flex gap-1">
+      <span className="text-[#AAC638] animate-pulse">|</span>
+      <span className="text-[#AAC638] animate-pulse" style={{ animationDelay: '0.2s' }}>|</span>
+      <span className="text-[#AAC638] animate-pulse" style={{ animationDelay: '0.4s' }}>|</span>
+    </span>
+  </div>
   );
 }
 
