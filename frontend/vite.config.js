@@ -5,5 +5,5 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(),tailwindcss()],
-  base: '/SANDARU-PORT/' // <-- This must match your repo name exactly!
+  base: '/Sandaru-Port/' // <-- This must match your repo name exactly!
 })
