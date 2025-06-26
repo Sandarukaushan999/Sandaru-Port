@@ -620,9 +620,9 @@ const Portfolio = () => {
       className="fixed top-0 left-0 right-0 bg-black/90 backdrop-blur-md z-40 border-b border-[#AAC638]/30"
     >
       <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row items-center justify-between">
           <motion.div 
-            className="text-2xl font-bold bg-gradient-to-r from-[#AAC638] to-green-500 bg-clip-text text-transparent"
+            className="text-2xl font-bold bg-gradient-to-r from-[#AAC638] to-green-500 bg-clip-text text-transparent mb-4 md:mb-0"
             whileHover={{ scale: 1.05 }}
           >
             &lt;SK/&gt;
@@ -649,6 +649,26 @@ const Portfolio = () => {
               </a>
             ))}
           </div>
+          {/* Mobile nav */}
+          <div className="flex md:hidden flex-col w-full">
+            <div className="flex justify-center space-x-4 mb-2">
+              {['hero', 'about', 'skills', 'projects', 'education', 'contact'].map((section) => (
+                <a
+                  key={section}
+                  href={`#${section}`}
+                  className={`capitalize transition-all duration-300 px-3 py-1 border border-[#AAC638]/40 rounded-lg text-sm
+                    ${activeSection === section ? 'font-semibold text-[#AAC638] bg-[#101c0b] border-[#AAC638]' : 'text-white hover:text-[#AAC638] hover:bg-[#101c0b]/80'}
+                  `}
+                  style={{
+                    background: activeSection === section ? '#101c0b' : 'transparent',
+                  }}
+                >
+                  {section}
+                </a>
+              ))}
+            </div>
+            <div className="w-full h-0.5 bg-[#AAC638] mb-2" />
+          </div>
         </div>
       </div>
     </motion.nav>
@@ -665,7 +685,10 @@ const Portfolio = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden">
+      <section
+        id="hero"
+        className="min-h-screen flex items-center justify-center relative overflow-hidden pt-24 md:pt-0"
+      >
         {/* Animated Grid Background */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute inset-0" style={{
