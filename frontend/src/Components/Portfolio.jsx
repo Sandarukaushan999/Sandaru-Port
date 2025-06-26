@@ -107,9 +107,11 @@ const TerminalWindow = ({ isOpen, onClose }) => {
     ],
     cv: () => {
       const link = document.createElement('a');
-      link.href = 'data:text/plain;charset=utf-8,CV Download Simulated - Replace with actual CV file';
+      link.href = sandaruCV;
       link.download = 'Sandaru_Kaushan_CV.pdf';
+      document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
       return ['CV download initiated...', 'Check your downloads folder!'];
     },
     social: () => [
@@ -272,7 +274,14 @@ const Chatbot = () => {
     } else if (lowerInput.includes('education') || lowerInput.includes('study')) {
       return "🎓 Sandaru is currently pursuing BSc Hons Software Engineering at SLIIT and has multiple certifications in DevOps, Docker, and Azure!";
     } else if (lowerInput.includes('cv') || lowerInput.includes('resume')) {
-      return "📄 You can download Sandaru's CV using the terminal! Just type 'terminal' to open it, then type 'cv'.";
+      // Direct download from chatbot
+      const link = document.createElement('a');
+      link.href = sandaruCV;
+      link.download = 'Sandaru_Kaushan_CV.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      return "📄 CV download started! Check your downloads folder.";
     } else {
       const responses = [
         "🔍 That's interesting! Feel free to explore different sections of the portfolio. Type 'terminal' for interactive commands!",
@@ -765,25 +774,7 @@ const Portfolio = () => {
             transition={{ duration: 1, delay: 0.8 }}
             className="mb-8"
           >
-            <div className="text-2xl md:text-3xl font-mono text-white mb-4">
-              <motion.span
-                animate={{ opacity: [1, 0, 1] }}
-                transition={{ duration: 0.8, repeat: Infinity }}
-              >
-                {'>'} 
-              </motion.span>
-              <span className="ml-2">Software Engineer Undergraduate </span>
-              <motion.span
-                animate={{ opacity: [1, 0, 1] }}
-                transition={{ duration: 0.8, repeat: Infinity }}
-              >
-                {'<'} 
-              </motion.span>
-            </div>
-            <div className="text-lg text-gray-400 font-mono">
-              <span className="text-green-400">const</span> <span className="text-yellow-400">passion</span> = 
-              <span className="text-green-400"> ['Mobile App development', 'Web Developement', 'Full-stack Deverlopment']</span>
-            </div>
+            <TypingEffect />
           </motion.div>
 
           {/* Enhanced Status Bar */}
@@ -1313,7 +1304,9 @@ const Portfolio = () => {
                     const link = document.createElement('a');
                     link.href = sandaruCV;
                     link.download = 'Sandaru_Kaushan_CV.pdf';
+                    document.body.appendChild(link);
                     link.click();
+                    document.body.removeChild(link);
                   }}
                 >
                   <Download className="w-5 h-5 inline mr-2" />
@@ -1390,5 +1383,50 @@ const Portfolio = () => {
     </div>
   );
 };
+
+// TypingEffect with 3 blinking cursors and green color for all lines
+const typingLines = [
+  'Software Engineer Undergraduate',
+  'Mobile Application Developer',
+  'Fullstack Developer'
+];
+
+function TypingEffect() {
+  const [lineIdx, setLineIdx] = useState(0);
+  const [displayed, setDisplayed] = useState('');
+  const [typing, setTyping] = useState(true);
+
+  useEffect(() => {
+    let timeout;
+    if (typing && displayed.length < typingLines[lineIdx].length) {
+      timeout = setTimeout(() => {
+        setDisplayed(typingLines[lineIdx].slice(0, displayed.length + 1));
+      }, 50);
+    } else if (typing && displayed.length === typingLines[lineIdx].length) {
+      timeout = setTimeout(() => setTyping(false), 1000);
+    } else if (!typing) {
+      timeout = setTimeout(() => {
+        setDisplayed('');
+        setTyping(true);
+        setLineIdx((prev) => (prev + 1) % typingLines.length);
+      }, 1000);
+    }
+    return () => clearTimeout(timeout);
+  }, [displayed, typing, lineIdx]);
+
+  // Render 3 blinking cursors
+  return (
+    <div className="text-2xl md:text-3xl font-mono mb-4 min-h-[2.5rem] flex justify-center items-center gap-2">
+      <span className="text-[#AAC638]">
+        {displayed}
+      </span>
+      <span className="flex gap-1">
+        <span className="text-[#AAC638] animate-pulse">|</span>
+        <span className="text-[#AAC638] animate-pulse" style={{ animationDelay: '0.2s' }}>|</span>
+        <span className="text-[#AAC638] animate-pulse" style={{ animationDelay: '0.4s' }}>|</span>
+      </span>
+    </div>
+  );
+}
 
 export default Portfolio;
