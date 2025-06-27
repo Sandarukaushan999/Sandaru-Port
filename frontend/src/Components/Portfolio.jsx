@@ -552,6 +552,22 @@ function HtmlTagHunterGame() {
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('hero');
   const [isVisible, setIsVisible] = useState({});
+  const [heroInView, setHeroInView] = useState(true);
+
+  useEffect(() => {
+    const heroSection = document.getElementById('hero');
+    if (!heroSection) return;
+
+    const observer = new window.IntersectionObserver(
+      ([entry]) => {
+        setHeroInView(entry.isIntersecting);
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(heroSection);
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -774,7 +790,7 @@ const Portfolio = () => {
             transition={{ duration: 1, delay: 0.8 }}
             className="mb-8"
           >
-            <TypingEffect />
+            <TypingEffect animate={heroInView} />
           </motion.div>
 
           {/* Enhanced Status Bar */}
@@ -1391,12 +1407,22 @@ const typingLines = [
   'Fullstack Developer'
 ];
 
-function TypingEffect() {
+function TypingEffect({ animate }) {
   const [lineIdx, setLineIdx] = useState(0);
   const [displayed, setDisplayed] = useState('');
   const [typing, setTyping] = useState(true);
 
+  // Reset typing effect when animate becomes true
   useEffect(() => {
+    if (!animate) {
+      setDisplayed('');
+      setTyping(true);
+      setLineIdx(0);
+    }
+  }, [animate]);
+
+  useEffect(() => {
+    if (!animate) return;
     let timeout;
     if (typing && displayed.length < typingLines[lineIdx].length) {
       timeout = setTimeout(() => {
@@ -1412,29 +1438,25 @@ function TypingEffect() {
       }, 1000);
     }
     return () => clearTimeout(timeout);
-  }, [displayed, typing, lineIdx]);
+  }, [displayed, typing, lineIdx, animate]);
 
-
-  
-  // Render 3 blinking cursors
-return (
-  <div className="text-2xl md:text-3xl font-mono mb-4 min-h-[2.5rem] flex justify-center items-center gap-2">
-    {/* 3 blinking cursors at the front */}
-    <span className="flex gap-1">
-      <span className="text-[#AAC638] animate-pulse">|</span>
-      <span className="text-[#AAC638] animate-pulse" style={{ animationDelay: '0.2s' }}>|</span>
-      <span className="text-[#AAC638] animate-pulse" style={{ animationDelay: '0.4s' }}>|</span>
-    </span>
-    <span className="text-[#AAC638]">
-      {displayed}
-    </span>
-    {/* 3 blinking cursors at the end */}
-    <span className="flex gap-1">
-      <span className="text-[#AAC638] animate-pulse">|</span>
-      <span className="text-[#AAC638] animate-pulse" style={{ animationDelay: '0.2s' }}>|</span>
-      <span className="text-[#AAC638] animate-pulse" style={{ animationDelay: '0.4s' }}>|</span>
-    </span>
-  </div>
+  // Render 3 blinking cursors at both sides
+  return (
+    <div className="text-2xl md:text-3xl font-mono mb-4 min-h-[2.5rem] flex justify-center items-center gap-2">
+      <span className="flex gap-1">
+        <span className="text-[#AAC638] animate-pulse">|</span>
+        <span className="text-[#AAC638] animate-pulse" style={{ animationDelay: '0.2s' }}>|</span>
+        <span className="text-[#AAC638] animate-pulse" style={{ animationDelay: '0.4s' }}>|</span>
+      </span>
+      <span className="text-[#AAC638]">
+        {displayed}
+      </span>
+      <span className="flex gap-1">
+        <span className="text-[#AAC638] animate-pulse">|</span>
+        <span className="text-[#AAC638] animate-pulse" style={{ animationDelay: '0.2s' }}>|</span>
+        <span className="text-[#AAC638] animate-pulse" style={{ animationDelay: '0.4s' }}>|</span>
+      </span>
+    </div>
   );
 }
 
