@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://sandarukaushan999.github.io/SANDARU-PORT",
+  "homepage": "https://sandarukaushan999.github.io/Sandaru-Port",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
