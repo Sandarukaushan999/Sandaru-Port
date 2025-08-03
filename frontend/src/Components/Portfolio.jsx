@@ -5,6 +5,7 @@ import robotIcon from '../assets/robot.png';
 import sandaruCV from '../assets/New Sandaru CV.pdf';
 import vendorVideo from '../assets/vendor.mp4';
 import fiverrVideo from '../assets/fiverr.mp4';
+import newProjectVideo from '../assets/n.mp4';
 
 // Matrix Rain Effect Component
 const MatrixRain = () => {
@@ -601,6 +602,14 @@ const Portfolio = () => {
   };
 
   const projects = [
+    {
+      title: 'VOXO POS | ERP System',
+      description: 'A robust, full-featured Point of Sale & Retail Management platform designed for real-world retail business needs with offline capabilities and enterprise-grade security.',
+      technologies: ['React 18', 'Vite', 'Electron', 'Node.js', 'Express.js', 'SQLite', 'Tailwind CSS', 'Lucide Icons', 'Zustand', 'Chart.js', 'JWT', 'bcrypt', 'ExcelJS'],
+      features: ['Offline-capable desktop app', 'Role-based access control', 'Barcode scanning', 'Real-time inventory alerts', 'Excel reporting'],
+      category: 'Full-Stack Development',
+      gradient: 'from-blue-400 to-purple-500'
+    },
     {
       title: 'LUMINA – Solar Management System',
       description: 'A comprehensive sustainability-focused platform for managing solar energy use, recycling waste, and accessing solar marketplaces.',
@@ -1206,18 +1215,55 @@ const Portfolio = () => {
                 <Code className="w-8 h-8 text-yellow-400 mr-3" />
                 <h3 className="text-2xl font-bold text-yellow-400">Project Demo</h3>
               </div>
-              <div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden w-full mb-4 border border-[#AAC638]">
-                <video
-                  ref={luminaRef}
-                  controls
-                  className="w-full h-full object-cover"
-                  onMouseEnter={() => luminaRef.current && luminaRef.current.play()}
-                  onMouseLeave={() => luminaRef.current && luminaRef.current.pause()}
-                >
-                  <source src={vendorVideo} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+              
+              {/* Video Player with Navigation */}
+              <div className="w-full mb-4">
+                <div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden w-full border border-[#AAC638] mb-4">
+                  <video
+                    ref={luminaRef}
+                    controls
+                    className="w-full h-full object-cover"
+                    onMouseEnter={() => luminaRef.current && luminaRef.current.play()}
+                    onMouseLeave={() => luminaRef.current && luminaRef.current.pause()}
+                  >
+                    <source src={vendorVideo} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+                
+                {/* Navigation Buttons */}
+                <div className="flex justify-center space-x-4 mb-4">
+                  <motion.button
+                    onClick={() => {
+                      if (luminaRef.current) {
+                        luminaRef.current.src = vendorVideo;
+                        luminaRef.current.load();
+                        luminaRef.current.play();
+                      }
+                    }}
+                    className="px-4 py-2 bg-yellow-400 text-black font-semibold rounded hover:bg-yellow-500 transition-colors"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Project 1
+                  </motion.button>
+                  <motion.button
+                    onClick={() => {
+                      if (luminaRef.current) {
+                        luminaRef.current.src = newProjectVideo;
+                        luminaRef.current.load();
+                        luminaRef.current.play();
+                      }
+                    }}
+                    className="px-4 py-2 bg-[#AAC638] text-black font-semibold rounded hover:bg-green-500 transition-colors"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Project 2
+                  </motion.button>
+                </div>
               </div>
+              
               <a
                 href="https://www.linkedin.com/posts/sandaru-kaushan-03b045267_fullstackdevelopment-reactjs-nodejs-activity-7341149905127673856-Ui2P?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEFS1e8BsXe4a_t1T4osBv5ztIqx6jlB6So"
                 target="_blank"
