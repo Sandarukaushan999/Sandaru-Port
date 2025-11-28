@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ChevronDown, Mail, Phone, MapPin, Download, Github, Linkedin, Cpu, Database, Zap, Monitor, Code, Layers, Settings, ExternalLink, GraduationCap, Award, Star, User, Send, Terminal, Minimize2, Maximize2, X, Film } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import robotIcon from '../assets/robot.png';
-import sandaruCV from '../assets/New Sandaru CV.pdf';
+import sandaruCV from '../assets/new cv sandaru kaushan.pdf';
 import vendorVideo from '../assets/vendor.mp4';
 import fiverrVideo from '../assets/fiverr.mp4';
-import newProjectVideo from '../assets/n.mp4';
+import newProjectVideo from '../assets/video-project-2.mp4';
 
 // Matrix Rain Effect Component
 const MatrixRain = () => {
